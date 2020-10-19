@@ -25,7 +25,7 @@ def _onUnMuteRequest(client, cb):
             if cb.message.reply_to_message.from_user.id == user_id:
               cb.message.delete()
           except UserNotParticipant:
-            client.answer_callback_query(cb.id, text="❗ Join 'channel' kemudian klik 'UnMute Me' lagi.", show_alert=True)
+            client.answer_callback_query(cb.id, text="❗ sub 'channel' kemudian klik 'UnMute Me' buat bisa ngetik.", show_alert=True)
       else:
         client.answer_callback_query(cb.id, text="❗ You are muted by admins for other reasons.", show_alert=True)
     else:
@@ -33,7 +33,7 @@ def _onUnMuteRequest(client, cb):
         client.send_message(chat_id, f"❗ **{cb.from_user.mention} is trying to UnMute himself but i can't unmute him because i am not an admin in this chat add me as admin again.**\n__#Leaving this chat...__")
         client.leave_chat(chat_id)
       else:
-        client.answer_callback_query(cb.id, text="❗ Warning: jangan klik kalo gk ke mute.", show_alert=True)
+        client.answer_callback_query(cb.id, text="❗ Warning: Don't click the button if you can speak freely.", show_alert=True)
 
 
 
@@ -50,7 +50,7 @@ def _check_member(client, message):
       except UserNotParticipant:
         try:
           sent_message = message.reply_text(
-              "{}, you are **not subscribed** to my [channel](https://t.me/{}) yet. Please [join](https://t.me/{}) and **press the button below** to unmute yourself.".format(message.from_user.mention, channel, channel),
+              "{}, kamu **belom subs** [channel](https://t.me/{}) klik dulu [join](https://t.me/{}) trus **klik tombol unmute** biar bisa ngetik.".format(message.from_user.mention, channel, channel),
               disable_web_page_preview=True,
               reply_markup=InlineKeyboardMarkup(
                   [[InlineKeyboardButton("UnMute Me", callback_data="onUnMuteRequest")]]
@@ -92,7 +92,7 @@ def config(client, message):
           sql.add_channel(chat_id, input_str)
           message.reply_text(f"✅ **Force Subscribe is Enabled**\n__Force Subscribe is enabled, all the group members have to subscribe this [channel](https://t.me/{input_str}) in order to send messages in this group.__", disable_web_page_preview=True)
         except UserNotParticipant:
-          message.reply_text(f"❗ **Not an Admin in the Channel**\n__I am not an admin in the [channel](https://t.me/{input_str}). Add me as a admin in order to enable ForceSubscribe.__", disable_web_page_preview=True)
+          message.reply_text(f"❗ **rusak**\n__bukan bos [channel](https://t.me/{input_str}). error.__", disable_web_page_preview=True)
         except (UsernameNotOccupied, PeerIdInvalid):
           message.reply_text(f"❗ **Invalid Channel Username.**")
         except Exception as err:
@@ -103,4 +103,4 @@ def config(client, message):
       else:
         message.reply_text("❌ **Force Subscribe is disabled in this chat.**")
   else:
-      message.reply_text("❗ **Group Creator Required**\n__bukan k.__")
+      message.reply_text("❗ **bukan bos**\n__Y.rusak")
